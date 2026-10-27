@@ -1,0 +1,2549 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ACK Kambaa Primary School</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Merriweather:wght@700&display=swap"
+        rel="stylesheet"
+    >
+
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+
+<body>
+
+<!-- ============================================================
+     NAVIGATION
+============================================================ -->
+
+<nav>
+
+    <div class="nav-logo">
+        <div class="crest">AK</div>
+        ACK Kambaa Primary
+    </div>
+
+    <!-- PUBLIC NAVIGATION -->
+    <div id="nav-public">
+
+        <a href="#" onclick="showPage('home')">
+            Home
+        </a>
+
+        <a href="#" onclick="showPage('announcements-pub')">
+            News
+        </a>
+
+        <a href="#" onclick="showPage('admission-form')">
+            Admissions
+        </a>
+
+        <a href="#" onclick="showPage('papers-pub')">
+            Resources
+        </a>
+
+    </div>
+
+
+    <!-- LOGIN / REGISTER -->
+    <div id="nav-auth">
+
+        <span
+            id="nav-user-name"
+            style="
+                font-size:.85rem;
+                color:rgba(255,255,255,.8);
+                display:none
+            "
+        ></span>
+
+        <button
+            class="btn btn-gold btn-sm"
+            onclick="openModal('modal-login')"
+            id="btn-login"
+        >
+            Login
+        </button>
+
+        <button
+            class="btn btn-outline btn-sm"
+            onclick="openModal('modal-register')"
+            id="btn-register"
+        >
+            Register
+        </button>
+
+        <button
+            class="btn btn-outline btn-sm"
+            style="
+                color:#fff;
+                border-color:rgba(255,255,255,.4);
+                display:none
+            "
+            onclick="logout()"
+            id="btn-logout"
+        >
+            Logout
+        </button>
+
+    </div>
+
+
+    <!-- STAFF NAVIGATION -->
+    <div id="nav-staff" style="display:none">
+
+        <a href="#" onclick="showPage('dashboard')">
+            Dashboard
+        </a>
+
+        <a href="#" onclick="showPage('students')">
+            Students
+        </a>
+
+        <a href="#" onclick="showPage('marks')">
+            Marks
+        </a>
+
+        <a href="#" onclick="showPage('attendance')">
+            Attendance
+        </a>
+
+        <a href="#" onclick="showPage('fees')">
+            Fees
+        </a>
+
+    </div>
+
+</nav>
+
+
+<!-- ============================================================
+     TOAST
+============================================================ -->
+
+<div id="toast"></div>
+
+
+<!-- ============================================================
+     HOME
+============================================================ -->
+
+<div class="page active" id="page-home">
+
+    <div class="hero">
+
+        <h1>
+            ACK Kambaa Primary School
+        </h1>
+
+        <p>
+            TOGETHOR WE SUCCEED.
+        </p>
+
+        <div class="hero-btns">
+
+            <button
+                class="btn btn-gold"
+                onclick="openModal('modal-login')"
+            >
+                Staff / Parent Login
+            </button>
+
+            <button
+                class="btn btn-outline"
+                style="
+                    color:#fff;
+                    border-color:rgba(255,255,255,.5)
+                "
+                onclick="showPage('admission-form')"
+            >
+                Apply for Admission
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <div class="quick-links">
+
+        <div
+            class="ql-card"
+            onclick="showPage('announcements-pub')"
+        >
+            <div class="icon">📢</div>
+            <h3>Announcements</h3>
+            <p>School news &amp; notices</p>
+        </div>
+
+
+        <div
+            class="ql-card"
+            onclick="showPage('papers-pub')"
+        >
+            <div class="icon">📄</div>
+            <h3>Revision Papers</h3>
+            <p>Download past papers</p>
+        </div>
+
+
+        <div
+            class="ql-card"
+            onclick="showPage('admission-form')"
+        >
+            <div class="icon">✍️</div>
+            <h3>Admissions</h3>
+            <p>Enrol your child today</p>
+        </div>
+
+
+        <div
+            class="ql-card"
+            onclick="openModal('modal-login')"
+        >
+            <div class="icon">📊</div>
+            <h3>Results</h3>
+            <p>View report cards</p>
+        </div>
+
+
+        <div
+            class="ql-card"
+            onclick="openModal('modal-login')"
+        >
+            <div class="icon">💳</div>
+            <h3>Fee Balance</h3>
+            <p>Check &amp; pay fees</p>
+        </div>
+
+
+        <div
+            class="ql-card"
+            onclick="openModal('modal-login')"
+        >
+            <div class="icon">📅</div>
+            <h3>Attendance</h3>
+            <p>Track daily attendance</p>
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ============================================================
+     PUBLIC ANNOUNCEMENTS
+============================================================ -->
+
+<div class="page" id="page-announcements-pub">
+
+    <div class="content">
+
+        <div class="page-header">
+            <h2>📢 School Announcements</h2>
+        </div>
+
+        <div id="pub-announcements-list">
+            <p style="color:var(--text-3)">
+                Loading…
+            </p>
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ============================================================
+     PUBLIC PAPERS
+============================================================ -->
+
+<div class="page" id="page-papers-pub">
+
+    <div class="content">
+
+        <div class="page-header">
+            <h2>📄 Revision Papers</h2>
+        </div>
+
+        <div class="search-row">
+
+            <input
+                type="text"
+                id="pub-paper-search"
+                placeholder="Search papers…"
+                oninput="filterPapersPub()"
+            >
+
+        </div>
+
+
+        <div
+            id="pub-papers-list"
+            class="table-wrap"
+        >
+            <p
+                style="
+                    padding:1rem;
+                    color:var(--text-3)
+                "
+            >
+                Loading…
+            </p>
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ============================================================
+     ADMISSION FORM
+============================================================ -->
+
+<div class="page" id="page-admission-form">
+
+    <div
+        class="content"
+        style="max-width:680px"
+    >
+
+        <div class="page-header">
+            <h2>✍️ Apply for Admission</h2>
+        </div>
+
+
+        <div class="card">
+
+            <div class="form-grid">
+
+                <div class="form-group">
+                    <label>
+                        Child's First Name *
+                    </label>
+
+                    <input
+                        id="adm-fname"
+                        type="text"
+                        placeholder="First name"
+                    >
+                </div>
+
+
+                <div class="form-group">
+                    <label>
+                        Child's Last Name *
+                    </label>
+
+                    <input
+                        id="adm-lname"
+                        type="text"
+                        placeholder="Last name"
+                    >
+                </div>
+
+
+                <div class="form-group">
+                    <label>
+                        Date of Registration
+                    </label>
+
+                    <input
+                        id="adm-dob"
+                        type="date"
+                    >
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Gender
+                    </label>
+
+                    <select id="adm-gender">
+
+                        <option value="">
+                            Select
+                        </option>
+
+                        <option value="male">
+                            Male
+                        </option>
+
+                        <option value="female">
+                            Female
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                
+
+<div class="form-group">
+    <label for="adm-class">Applying for Class *</label>
+
+    <select
+        id="adm-class"
+        name="requested_class_id"
+        required
+    >
+        <option value="">Select class</option>
+        <option value="1">Grade 1</option>
+        <option value="2">Grade 2</option>
+        <option value="3">Grade 3</option>
+        <option value="4">Grade 4</option>
+        <option value="5">Grade 5</option>
+        <option value="6">Grade 6</option>
+        <option value="7">Grade 7</option>
+        <option value="8">Grade 8</option>
+        <option value="9">Grade 9</option>
+    </select>
+</div>
+
+
+
+                <div class="form-group">
+
+                    <label>
+                        Parent/Guardian Name *
+                    </label>
+
+                    <input
+                        id="adm-pname"
+                        type="text"
+                        placeholder="Full name"
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Parent Phone *
+                    </label>
+
+                    <input
+                        id="adm-pphone"
+                        type="tel"
+                        placeholder="0700 000 000"
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Parent Email
+                    </label>
+
+                    <input
+                        id="adm-pemail"
+                        type="email"
+                        placeholder="email@example.com"
+                    >
+
+                </div>
+
+            </div>
+
+
+            <div class="form-actions">
+
+                <button
+                    class="btn btn-primary"
+                    onclick="submitAdmission()"
+                >
+                    Submit Application
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ============================================================
+     STAFF DASHBOARD
+============================================================ -->
+
+<div class="page" id="page-dashboard">
+
+    <div class="content">
+
+        <div class="page-header">
+
+            <h2>🏫 Dashboard</h2>
+
+            <span
+                id="dash-date"
+                style="
+                    color:var(--text-3);
+                    font-size:.85rem
+                "
+            ></span>
+
+        </div>
+
+
+        <div class="stats-row">
+
+            <div class="stat-card">
+
+                <div class="label">
+                    Students
+                </div>
+
+                <div
+                    class="value"
+                    id="stat-students"
+                >
+                    —
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="label">
+                    Classes
+                </div>
+
+                <div
+                    class="value"
+                    id="stat-classes"
+                >
+                    —
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="label">
+                    Staff
+                </div>
+
+                <div
+                    class="value"
+                    id="stat-staff"
+                >
+                    —
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="label">
+                    Pending Admissions
+                </div>
+
+                <div
+                    class="value"
+                    id="stat-admissions"
+                >
+                    —
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div
+            style="
+                display:grid;
+                grid-template-columns:1fr 1fr;
+                gap:1.2rem
+            "
+            class="two-col"
+        >
+
+            <div class="card">
+
+                <h3
+                    style="
+                        font-size:.95rem;
+                        margin-bottom:1rem
+                    "
+                >
+                    Recent Announcements
+                </h3>
+
+                <div id="dash-announcements"></div>
+
+            </div>
+
+
+            <div class="card">
+
+                <h3
+                    style="
+                        font-size:.95rem;
+                        margin-bottom:1rem
+                    "
+                >
+                    Quick Actions
+                </h3>
+
+                <div
+                    style="
+                        display:flex;
+                        flex-direction:column;
+                        gap:.6rem
+                    "
+                >
+
+                    <button
+                        class="btn btn-outline"
+                        onclick="showPage('attendance')"
+                    >
+                        📅 Record Attendance
+                    </button>
+
+
+                    <button
+                        class="btn btn-outline"
+                        onclick="showPage('marks')"
+                    >
+                        📝 Enter Marks
+                    </button>
+
+
+                    <button
+                        class="btn btn-outline"
+                        onclick="showPage('announcements')"
+                    >
+                        📢 Post Announcement
+                    </button>
+
+
+                    <button
+                        class="btn btn-outline"
+                        onclick="showPage('papers')"
+                    >
+                        📄 Upload Paper
+                    </button>
+
+
+                    <button
+                        class="btn btn-outline"
+                        onclick="showPage('fees')"
+                    >
+                        💳 Record Payment
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ============================================================
+     PARENT DASHBOARD
+============================================================ -->
+
+<div
+    class="page"
+    id="page-parent-dashboard"
+>
+
+    <div class="content">
+
+        <div class="page-header">
+
+            <div>
+
+                <h1>
+                    Parent Dashboard
+                </h1>
+
+                <p>
+                    View your children's school information.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <h2>
+                My Children
+            </h2>
+
+            <div id="parent-children-list">
+
+                <p>
+                    Loading...
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ============================================================
+     STUDENTS
+============================================================ -->
+
+<div class="page" id="page-students">
+
+    <div class="content">
+
+        <div class="page-header">
+
+            <h2>👨‍🎓 Students</h2>
+
+            <button
+                class="btn btn-primary"
+                onclick="openModal('modal-add-student')"
+            >
+                + Add Student
+            </button>
+
+        </div>
+
+
+        <div class="search-row">
+
+            <input
+                type="text"
+                id="student-search"
+                placeholder="Search name or admission no…"
+                oninput="loadStudents()"
+            >
+
+
+            <select
+                id="student-class-filter"
+                onchange="loadStudents()"
+            >
+
+                <option value="">
+                    All Classes
+                </option>
+
+            </select>
+
+
+            <select
+                id="student-status-filter"
+                onchange="loadStudents()"
+            >
+
+                <option value="">
+                    All Status
+                </option>
+
+                <option value="active">
+                    Active
+                </option>
+
+                <option value="transferred">
+                    Transferred
+                </option>
+
+                <option value="graduated">
+                    Graduated
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <div class="table-wrap">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+                        <th>Adm. No</th>
+                        <th>Name</th>
+                        <th>Class</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+
+                </thead>
+
+
+                <tbody id="students-tbody">
+
+                    <tr>
+
+                        <td
+                            colspan="5"
+                            style="
+                                color:var(--text-3);
+                                padding:1.5rem
+                            "
+                        >
+                            Loading…
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ============================================================
+     MARKS & RESULTS
+============================================================ -->
+
+<div class="page" id="page-marks">
+
+    <div class="content">
+
+        <div class="page-header">
+
+            <h2>
+                📝 Marks &amp; Results
+            </h2>
+
+        </div>
+
+
+        <div class="tabs">
+
+           <button class="tab-btn active" onclick="switchTab('marks','enter', this)">
+    Enter Marks
+</button>
+
+<button class="tab-btn" onclick="switchTab('marks','view', this)">
+    View / Report Card
+</button> 
+
+        </div>
+
+
+        <!-- ENTER MARKS -->
+
+        <div
+            class="tab-panel active"
+            id="marks-tab-enter"
+        >
+
+            <div
+                class="card"
+                style="margin-bottom:1.2rem"
+            >
+
+                <div class="form-grid">
+
+
+                    <!-- CLASS -->
+
+                    <div class="form-group">
+
+                        <label>
+                            Class
+                        </label>
+
+                        <select
+                            id="marks-class"
+                            onchange="
+                                loadExamsByClass();
+                                loadSubjectsByClass();
+                            "
+                        >
+
+                            <option value="">
+                                Select class
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- EXAM -->
+
+                    <div class="form-group">
+
+                        <label>
+                            Exam
+                        </label>
+
+                        <select id="marks-exam">
+
+                            <option value="">
+                                Select exam
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- SUBJECT -->
+
+                    <div class="form-group">
+
+                        <label>
+                            Subject
+                        </label>
+
+                        <select id="marks-subject">
+
+                            <option value="">
+                                Select subject
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+                <div class="form-actions">
+
+                    <button
+                        class="btn btn-primary"
+                        onclick="loadStudentsForMarks()"
+                    >
+                        Load Students
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <div id="marks-entry-table"></div>
+
+
+            <div
+                id="marks-save-row"
+                style="
+                    display:none;
+                    margin-top:1rem
+                "
+            >
+
+                <button
+                    class="btn btn-primary"
+                    onclick="saveMarks()"
+                >
+                    💾 Save All Marks
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- REPORT CARD -->
+
+        <div
+            class="tab-panel"
+            id="marks-tab-view"
+        >
+
+            <div
+                class="card"
+                style="margin-bottom:1.2rem"
+            >
+
+                <div class="form-grid">
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Student
+                            (Adm. No or Name)
+                        </label>
+
+                        <input
+                            id="rc-student-search"
+                            type="text"
+                            placeholder="Search…"
+                            oninput="searchStudentsRC()"
+                        >
+
+                        <select
+                            id="rc-student"
+                            style="margin-top:.4rem"
+                        >
+
+                            <option value="">
+                                Select student
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Exam
+                        </label>
+
+                        <select id="rc-exam">
+
+                            <option value="">
+                                Select exam
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+                <div class="form-actions">
+
+                    <button
+                        class="btn btn-primary"
+                        onclick="loadReportCard()"
+                    >
+                        View Report Card
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <div id="report-card-container"></div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ============================================================
+     ATTENDANCE
+============================================================ -->
+
+<div class="page" id="page-attendance">
+
+    <div class="content">
+
+        <div class="page-header">
+
+            <h2>
+                📅 Attendance
+            </h2>
+
+        </div>
+
+
+        <div class="tabs">
+          <button class="tab-btn active" onclick="switchTab('att','record', this)">
+    Record Attendance
+
+          </button>
+
+          <button class="tab-btn" onclick="switchTab('att','history', this)">
+    History
+          </button>
+
+            
+        </div>
+
+
+        <!-- RECORD -->
+
+        <div
+            class="tab-panel active"
+            id="att-tab-record"
+        >
+
+            <div
+                class="card"
+                style="margin-bottom:1.2rem"
+            >
+
+                <div class="form-grid">
+
+                    <div class="form-group">
+
+                        <label>
+                            Class
+                        </label>
+
+                        <select
+                            id="att-class"
+                            onchange="loadClassStudents()"
+                        >
+
+                            <option value="">
+                                Select class
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Date
+                        </label>
+
+                        <input
+                            id="att-date"
+                            type="date"
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <div class="form-actions">
+
+                    <button
+                        class="btn btn-primary"
+                        onclick="loadClassStudents()"
+                    >
+                        Load Class
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <div
+                id="att-grid"
+                class="att-grid"
+            ></div>
+
+
+            <div
+                id="att-save-row"
+                style="
+                    display:none;
+                    margin-top:1.2rem
+                "
+            >
+
+                <button
+                    class="btn btn-primary"
+                    onclick="saveAttendance()"
+                >
+                    💾 Save Attendance
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- HISTORY -->
+
+        <div
+            class="tab-panel"
+            id="att-tab-history"
+        >
+
+            <div class="search-row">
+
+                <select
+                    id="att-hist-class"
+                    onchange="loadAttHistory()"
+                >
+
+                    <option value="">
+                        All Classes
+                    </option>
+
+                </select>
+
+
+                <input
+                    id="att-hist-date"
+                    type="date"
+                    onchange="loadAttHistory()"
+                >
+
+            </div>
+
+
+            <div class="table-wrap">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+                            <th>Date</th>
+                            <th>Student</th>
+                            <th>Class</th>
+                            <th>Status</th>
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody id="att-history-tbody">
+
+                        <tr>
+
+                            <td
+                                colspan="4"
+                                style="
+                                    color:var(--text-3);
+                                    padding:1.5rem
+                                "
+                            >
+                                Select filters above
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ============================================================
+     FEES
+============================================================ -->
+
+<div class="page" id="page-fees">
+
+    <div class="content">
+
+        <div class="page-header">
+
+            <h2>
+                💳 Fee Management
+            </h2>
+
+        </div>
+
+
+        <div class="tabs">
+
+            <button class="tab-btn active" onclick="switchTab('fees','balance', this)">
+    Fee Balance
+</button>
+
+<button class="tab-btn" onclick="switchTab('fees','payment', this)">
+    Record Payment
+</button>
+
+<button class="tab-btn" onclick="switchTab('fees','types', this)">
+    Fee Types
+</button>
+        </div>
+
+
+        <!-- FEE BALANCE -->
+
+        <div
+            class="tab-panel active"
+            id="fees-tab-balance"
+        >
+
+            <div
+                class="card"
+                style="margin-bottom:1.2rem"
+            >
+
+                <div class="form-grid">
+
+                    <div class="form-group">
+
+                        <label>
+                            Student
+                        </label>
+
+                        <input
+                            id="fee-student-search"
+                            type="text"
+                            placeholder="Search by name or adm. no…"
+                            oninput="searchStudentFee()"
+                        >
+
+                        <select
+                            id="fee-student"
+                            style="margin-top:.4rem"
+                        >
+
+                            <option value="">
+                                Select student
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+                <div class="form-actions">
+
+                    <button
+                        class="btn btn-primary"
+                        onclick="loadFeeBalance()"
+                    >
+                        Check Balance
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <div id="fee-balance-container"></div>
+
+        </div>
+
+
+        <!-- RECORD PAYMENT -->
+
+        <div
+            class="tab-panel"
+            id="fees-tab-payment"
+        >
+
+            <div
+                class="card"
+                style="max-width:520px"
+            >
+
+                <div class="form-grid">
+
+                    <div class="form-group">
+
+                        <label>
+                            Student
+                        </label>
+
+                        <input
+                            id="pay-student-search"
+                            type="text"
+                            placeholder="Search…"
+                            oninput="searchStudentPay()"
+                        >
+
+                        <select
+                            id="pay-student"
+                            style="margin-top:.4rem"
+                            onchange="loadFeeTypes()"
+                        >
+
+                            <option value="">
+                                Select student
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Fee Type
+                        </label>
+
+                        <select id="pay-fee-type">
+
+                            <option value="">
+                                Select fee type
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Amount Paid (KES)
+                        </label>
+
+                        <input
+                            id="pay-amount"
+                            type="number"
+                            placeholder="0.00"
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Payment Method
+                        </label>
+
+                        <select id="pay-method">
+
+                            <option value="cash">
+                                Cash
+                            </option>
+
+                            <option value="mpesa">
+                                M-PESA
+                            </option>
+
+                            <option value="bank">
+                                Bank
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Reference / M-PESA Code
+                        </label>
+
+                        <input
+                            id="pay-ref"
+                            type="text"
+                            placeholder="Optional"
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Date
+                        </label>
+
+                        <input
+                            id="pay-date"
+                            type="date"
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <div class="form-actions">
+
+                    <button
+                        class="btn btn-primary"
+                        onclick="recordPayment()"
+                    >
+                        Record Payment
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- FEE TYPES -->
+
+        <div
+            class="tab-panel"
+            id="fees-tab-types"
+        >
+
+            <div
+                class="page-header"
+                style="margin-bottom:1rem"
+            >
+
+                <span></span>
+
+                <button
+                    class="btn btn-primary btn-sm"
+                    onclick="openModal('modal-add-fee-type')"
+                >
+                    + New Fee Type
+                </button>
+
+            </div>
+
+
+            <div class="table-wrap">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+                            <th>Name</th>
+                            <th>Amount (KES)</th>
+                            <th>Term</th>
+                            <th>Year</th>
+                            <th>Class</th>
+                            <th>Due Date</th>
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody id="fee-types-tbody">
+
+                        <tr>
+
+                            <td
+                                colspan="6"
+                                style="
+                                    padding:1.5rem;
+                                    color:var(--text-3)
+                                "
+                            >
+                                Loading…
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ============================================================
+     STAFF ANNOUNCEMENTS
+============================================================ -->
+
+<div
+    class="page"
+    id="page-announcements"
+>
+
+    <div class="content">
+
+        <div class="page-header">
+
+            <h2>
+                📢 Announcements
+            </h2>
+
+            <button
+                class="btn btn-primary"
+                onclick="openModal('modal-add-announcement')"
+            >
+                + Post Announcement
+            </button>
+
+        </div>
+
+
+        <div id="staff-announcements-list">
+
+            <p style="color:var(--text-3)">
+                Loading…
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ============================================================
+     STAFF PAPERS
+============================================================ -->
+
+<div
+    class="page"
+    id="page-papers"
+>
+
+    <div class="content">
+
+        <div class="page-header">
+
+            <h2>
+                📄 Revision Papers
+            </h2>
+
+            <button
+                class="btn btn-primary"
+                onclick="openModal('modal-upload-paper')"
+            >
+                + Upload Paper
+            </button>
+
+        </div>
+
+
+        <div class="table-wrap">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+                        <th>Title</th>
+                        <th>Subject</th>
+                        <th>Class</th>
+                        <th>Uploaded</th>
+                        <th>Actions</th>
+                    </tr>
+
+                </thead>
+
+
+                <tbody id="papers-tbody">
+
+                    <tr>
+
+                        <td
+                            colspan="5"
+                            style="
+                                padding:1.5rem;
+                                color:var(--text-3)
+                            "
+                        >
+                            Loading…
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ============================================================
+     ADMISSIONS STAFF
+============================================================ -->
+
+<div
+    class="page"
+    id="page-admissions"
+>
+
+    <div class="content">
+
+        <div class="page-header">
+
+            <h2>
+                ✍️ Admissions
+            </h2>
+
+        </div>
+
+
+        <div class="search-row">
+
+            <select
+                id="adm-filter-status"
+                onchange="loadAdmissions()"
+            >
+
+                <option value="">
+                    All Status
+                </option>
+
+                <option value="pending">
+                    Pending
+                </option>
+
+                <option value="accepted">
+                    Accepted
+                </option>
+
+                <option value="rejected">
+                    Rejected
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <div class="table-wrap">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+                        <th>Name</th>
+                        <th>Class</th>
+                        <th>Parent</th>
+                        <th>Phone</th>
+                        <th>Submitted</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+
+                </thead>
+
+
+                <tbody id="admissions-tbody">
+
+                    <tr>
+
+                        <td
+                            colspan="7"
+                            style="
+                                padding:1.5rem;
+                                color:var(--text-3)
+                            "
+                        >
+                            Loading…
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ============================================================
+     LOGIN MODAL
+============================================================ -->
+
+<div
+    class="modal-overlay"
+    id="modal-login"
+>
+
+    <div
+        class="modal"
+        style="max-width:380px"
+    >
+
+        <div class="modal-header">
+
+            <h3>
+                Staff / Parent Login
+            </h3>
+
+            <button
+                class="modal-close"
+                onclick="closeModal('modal-login')"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <div
+            class="form-group"
+            style="margin-bottom:.9rem"
+        >
+
+            <label>
+                Email
+            </label>
+
+            <input
+                id="login-email"
+                type="email"
+                placeholder="you@ackkambaa.ac.ke"
+            >
+
+        </div>
+
+
+        <div
+            class="form-group"
+            style="margin-bottom:1.2rem"
+        >
+
+            <label>
+                Password
+            </label>
+
+            <input
+                id="login-password"
+                type="password"
+                placeholder="Password"
+            >
+
+        </div>
+
+
+        <button
+            class="btn btn-primary"
+            style="width:100%"
+            onclick="doLogin()"
+        >
+            Login
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- ============================================================
+     PARENT REGISTRATION MODAL
+============================================================ -->
+
+<div
+    class="modal-overlay"
+    id="modal-register"
+>
+
+    <div
+        class="modal"
+        style="max-width:500px"
+    >
+
+        <div class="modal-header">
+
+            <h3>
+                Parent Registration
+            </h3>
+
+            <button
+                class="modal-close"
+                onclick="closeModal('modal-register')"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <div class="form-grid">
+
+            <div
+                class="form-group"
+                style="grid-column:1/-1"
+            >
+
+                <label>
+                    Full Name *
+                </label>
+
+                <input
+                    id="register-name"
+                    type="text"
+                    placeholder="Enter your full name"
+                    autocomplete="name"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Email *
+                </label>
+
+                <input
+                    id="register-email"
+                    type="email"
+                    placeholder="you@example.com"
+                    autocomplete="email"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Phone
+                </label>
+
+                <input
+                    id="register-phone"
+                    type="tel"
+                    placeholder="07XXXXXXXX"
+                    autocomplete="tel"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Password *
+                </label>
+
+                <input
+                    id="register-password"
+                    type="password"
+                    placeholder="At least 8 characters"
+                    autocomplete="new-password"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Confirm Password *
+                </label>
+
+                <input
+                    id="register-confirm-password"
+                    type="password"
+                    placeholder="Enter password again"
+                    autocomplete="new-password"
+                >
+
+            </div>
+
+        </div>
+
+
+        <div class="form-actions">
+
+            <button
+                class="btn btn-primary"
+                onclick="registerParent()"
+            >
+                Create Parent Account
+            </button>
+
+
+            <button
+                class="btn btn-outline"
+                onclick="closeModal('modal-register')"
+            >
+                Cancel
+            </button>
+
+        </div>
+
+
+        <div
+            style="
+                text-align:center;
+                margin-top:1rem;
+                font-size:.85rem
+            "
+        >
+
+            Already have an account?
+
+            <button
+                type="button"
+                class="btn btn-outline btn-sm"
+                onclick="
+                    closeModal('modal-register');
+                    openModal('modal-login')
+                "
+            >
+                Login
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ADD STUDENT -->
+<div class="modal-overlay" id="modal-add-student">
+
+    <div class="modal">
+
+        <div class="modal-header">
+            <h3>Add Student</h3>
+
+            <button
+                type="button"
+                class="modal-close"
+                onclick="closeModal('modal-add-student')">
+                ×
+            </button>
+        </div>
+
+        <div class="form-grid">
+
+            <div class="form-group">
+                <label>Admission No *</label>
+                <input
+                    id="ns-adm"
+                    type="text"
+                    placeholder="e.g. KPS/2024/001">
+            </div>
+
+            <div class="form-group">
+                <label>First Name *</label>
+                <input
+                    id="ns-fname"
+                    type="text">
+            </div>
+
+            <div class="form-group">
+                <label>Last Name *</label>
+                <input
+                    id="ns-lname"
+                    type="text">
+            </div>
+
+            <div class="form-group">
+                <label>Date of Birth</label>
+                <input
+                    id="ns-dob"
+                    type="date">
+            </div>
+
+            <div class="form-group">
+                <label>Gender *</label>
+
+                <select id="ns-gender">
+                    <option value="">Select gender</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Class</label>
+
+                <select id="ns-class">
+                    <option value="">Select class</option>
+                </select>
+            </div>
+
+        </div>
+
+        <div class="form-actions">
+
+            <button
+                type="button"
+                class="btn btn-primary"
+                onclick="addStudent()">
+                Add Student
+            </button>
+
+            <button
+                type="button"
+                class="btn btn-outline"
+                onclick="closeModal('modal-add-student')">
+                Cancel
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- ============================================================
+     ADD ANNOUNCEMENT MODAL
+============================================================ -->
+
+<div
+    class="modal-overlay"
+    id="modal-add-announcement"
+>
+
+    <div class="modal">
+
+        <div class="modal-header">
+
+            <h3>
+                Post Announcement
+            </h3>
+
+            <button
+                class="modal-close"
+                onclick="closeModal('modal-add-announcement')"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <div class="form-grid">
+
+
+            <div
+                class="form-group"
+                style="grid-column:1/-1"
+            >
+
+                <label>
+                    Title *
+                </label>
+
+                <input
+                    id="ann-title"
+                    type="text"
+                    placeholder="Announcement title"
+                >
+
+            </div>
+
+
+            <div
+                class="form-group"
+                style="grid-column:1/-1"
+            >
+
+                <label>
+                    Body *
+                </label>
+
+                <textarea
+                    id="ann-body"
+                    placeholder="Write your announcement…"
+                ></textarea>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Audience
+                </label>
+
+                <select id="ann-audience">
+
+                    <option value="all">
+                        All
+                    </option>
+
+                    <option value="parents">
+                        Parents
+                    </option>
+
+                    <option value="staff">
+                        Staff
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Expires (optional)
+                </label>
+
+                <input
+                    id="ann-expires"
+                    type="datetime-local"
+                >
+
+            </div>
+
+        </div>
+
+
+        <div class="form-actions">
+
+            <button
+                class="btn btn-primary"
+                onclick="postAnnouncement()"
+            >
+                Publish
+            </button>
+
+
+            <button
+                class="btn btn-outline"
+                onclick="closeModal('modal-add-announcement')"
+            >
+                Cancel
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ============================================================
+     UPLOAD PAPER MODAL
+============================================================ -->
+
+<div
+    class="modal-overlay"
+    id="modal-upload-paper"
+>
+
+    <div class="modal">
+
+        <div class="modal-header">
+
+            <h3>
+                Upload Revision Paper
+            </h3>
+
+            <button
+                class="modal-close"
+                onclick="closeModal('modal-upload-paper')"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <div class="form-grid">
+
+
+            <div
+                class="form-group"
+                style="grid-column:1/-1"
+            >
+
+                <label>
+                    Title *
+                </label>
+
+                <input
+                    id="paper-title"
+                    type="text"
+                    placeholder="e.g. Grade 7 Mathematics Term 1 2026"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Class
+                </label>
+
+                <select id="paper-class">
+
+                    <option value="">
+                        All classes
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Subject
+                </label>
+
+                <select id="paper-subject">
+
+                    <option value="">
+                        All subjects
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div
+                class="form-group"
+                style="grid-column:1/-1"
+            >
+
+                <label>
+                    Description
+                </label>
+
+                <textarea
+                    id="paper-desc"
+                    placeholder="Optional description…"
+                    style="min-height:60px"
+                ></textarea>
+
+            </div>
+
+
+            <div
+                class="form-group"
+                style="grid-column:1/-1"
+            >
+
+                <label>
+                    File (PDF, DOC, image) *
+                </label>
+
+                <input
+                    id="paper-file"
+                    type="file"
+                    accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
+                >
+
+            </div>
+
+        </div>
+
+
+        <div class="form-actions">
+
+            <button
+                class="btn btn-primary"
+                onclick="uploadPaper()"
+            >
+                Upload
+            </button>
+
+
+            <button
+                class="btn btn-outline"
+                onclick="closeModal('modal-upload-paper')"
+            >
+                Cancel
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ============================================================
+     ADD FEE TYPE MODAL
+============================================================ -->
+
+<div
+    class="modal-overlay"
+    id="modal-add-fee-type"
+>
+
+    <div class="modal">
+
+        <div class="modal-header">
+
+            <h3>
+                New Fee Type
+            </h3>
+
+            <button
+                class="modal-close"
+                onclick="closeModal('modal-add-fee-type')"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <div class="form-grid">
+
+
+            <div class="form-group">
+
+                <label>
+                    Name *
+                </label>
+
+                <input
+                    id="ft-name"
+                    type="text"
+                    placeholder="e.g. Term 1 Tuition 2026"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Amount (KES) *
+                </label>
+
+                <input
+                    id="ft-amount"
+                    type="number"
+                    placeholder="0.00"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Term
+                </label>
+
+                <select id="ft-term">
+
+                    <option value="">
+                        N/A
+                    </option>
+
+                    <option value="1">
+                        Term 1
+                    </option>
+
+                    <option value="2">
+                        Term 2
+                    </option>
+
+                    <option value="3">
+                        Term 3
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Academic Year *
+                </label>
+
+                <input
+                    id="ft-year"
+                    type="number"
+                    placeholder="2026"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Class
+                    (leave blank for all)
+                </label>
+
+                <select id="ft-class">
+
+                    <option value="">
+                        All Classes
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Due Date
+                </label>
+
+                <input
+                    id="ft-due"
+                    type="date"
+                >
+
+            </div>
+
+        </div>
+
+
+        <div class="form-actions">
+
+            <button
+                class="btn btn-primary"
+                onclick="addFeeType()"
+            >
+                Create
+            </button>
+
+
+            <button
+                class="btn btn-outline"
+                onclick="closeModal('modal-add-fee-type')"
+            >
+                Cancel
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ============================================================
+     JAVASCRIPT
+============================================================ -->
+
+<script src="assets/js/api.js?v=2"></script>
+<script src="assets/js/auth.js?v=2"></script>
+</body>
+</html>
+```
